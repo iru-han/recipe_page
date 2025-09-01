@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>인증 완료</title>
+  <script>
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.hash.substring(1));
+    const accessToken = params.get('access_token');
+
+    if (accessToken) {
+      alert('이메일 인증이 완료되었습니다!');
+      window.close(); // ✅ 브라우저 창을 닫습니다.
+    } else {
+      alert('인증 실패');
+    }
+  </script>
+</head>
+<body>
+  <h1>인증이 완료되었습니다!</h1>
+  <p>창을 닫고 앱으로 돌아가 로그인해주세요.</p>
+</body>
+</html>
