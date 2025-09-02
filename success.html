@@ -2,38 +2,60 @@
 <html>
 <head>
   <title>인증 완료</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f2f5;
+      text-align: center;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>인증이 완료되었습니다!</h1>
+    <p>창을 닫고 앱으로 돌아가 로그인해주세요.</p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script>
-    // URL에서 인증 토큰을 확인합니다.
     const url = new URL(window.location.href);
-    const params = new URLSearchParams(url.search);
-    const code = params.get('code'); // ✅ code 파라미터 가져오기
+    const params = new URLSearchParams(url.hash.substring(1));
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
 
-    if (code) {
-      // ✅ PKCE 코드를 세션 토큰으로 교환하는 로직 추가
-      const supabase = window.supabase.createClient(
-        SUPABASE_URL, // ✅ 여기에 Supabase URL
-        SUPABASE_ANON_KEY
-      );
-
-      supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
+    if (accessToken && refreshToken) {
+      // ✅ Supabase 클라이언트 생성
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      
+      // ✅ URL의 토큰으로 세션 설정
+      supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken
+      }).then(({ error }) => {
         if (error) {
-          alert('인증 실패');
-          window.close();
+          alert('세션 설정 실패: ' + error.message);
         } else {
-          // ✅ 성공적으로 세션을 얻으면 알림을 띄웁니다.
           alert('메일 인증이 완료되었습니다!');
           window.close();
         }
       });
     } else {
       alert('인증 실패');
-      window.close();
     }
   </script>
-</head>
-<body>
-  <h1>인증이 완료되었습니다!</h1>
-  <p>창을 닫고 앱으로 돌아가 로그인해주세요.</p>
 </body>
 </html>
