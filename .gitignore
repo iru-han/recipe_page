@@ -1,0 +1,4 @@
+/ios/Flutter/.symlinks/
+/ios/.bundle/
+.env
+config.js
