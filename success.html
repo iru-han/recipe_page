@@ -6,7 +6,7 @@
   <script>
     // URL에서 인증 토큰을 확인합니다.
     const url = new URL(window.location.href);
-    const params = new URLSearchParams(url.params);
+    const params = new URLSearchParams(url.search);
     const code = params.get('code'); // ✅ code 파라미터 가져오기
 
     if (code) {
