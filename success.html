@@ -2,22 +2,24 @@
 <html>
 <head>
   <title>인증 완료</title>
+  <script src="config.js"></script> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>메일 인증이 완료되었습니다!</h1>
+    <p>창을 닫고 앱으로 돌아가 로그인해주세요.</p>
+  </div>
   <script>
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.hash.substring(1));
     const accessToken = params.get('access_token');
 
     if (accessToken) {
-      alert('이메일 인증이 완료되었습니다!');
-      window.close(); // ✅ 브라우저 창을 닫습니다.
+      alert('메일 인증이 완료되었습니다!');
+      window.close();
     } else {
       alert('인증 실패');
-      window.close();
     }
   </script>
-</head>
-<body>
-  <h1>인증이 완료되었습니다!</h1>
-  <p>창을 닫고 앱으로 돌아가 로그인해주세요.</p>
 </body>
 </html>
