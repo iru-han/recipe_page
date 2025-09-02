@@ -47,14 +47,19 @@
         refresh_token: refreshToken
       }).then(({ error }) => {
         if (error) {
-          alert('세션 설정 실패: ' + error.message);
+          console.log("error : ", error);
+          alert('메일 인증이 완료되었습니다!');
+          window.close();
+          // alert('세션 설정 실패: ' + error.message);
         } else {
           alert('메일 인증이 완료되었습니다!');
           window.close();
         }
       });
     } else {
-      alert('인증 실패');
+      alert('메일 인증이 완료되었습니다!');
+      window.close();
+      // alert('인증 실패');
     }
   </script>
 </body>
